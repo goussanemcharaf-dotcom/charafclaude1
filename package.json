@@ -1,0 +1,22 @@
+{
+  "name": "premium-portfolio-ad",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium Website Portfolio — vertical Meta ad (1080x1920), rendered deterministically from HTML/JS scenes.",
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/render-assets.mjs",
+    "audio": "python3 scripts/build_audio.py --plot",
+    "frames": "node scripts/render-frames.mjs --out out/frames/preview",
+    "export": "node scripts/export.mjs",
+    "storyboard": "node scripts/storyboard.mjs",
+    "docs": "node scripts/make-docs.mjs",
+    "verify": "python3 scripts/verify.py",
+    "build": "npm run assets && npm run export && npm run storyboard && npm run docs && npm run verify",
+    "preview": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.56",
+    "three": "^0.180.0"
+  }
+}

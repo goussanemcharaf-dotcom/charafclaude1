@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=1080">
+<title>Cover — Premium Website Portfolio</title>
+<link rel="stylesheet" href="./styles/base.css"><link rel="stylesheet" href="./styles/scenes.css"><link rel="stylesheet" href="./styles/portfolio.css">
+<style>
+  .cv-eyebrow { position: absolute; left: 0; right: 0; top: 318px; text-align: center; font: 700 34px var(--f-ui); letter-spacing: 0.18em; color: var(--accent); }
+  .cv-l1 { position: absolute; left: 0; right: 0; top: 390px; display: flex; justify-content: center; }
+  .cv-l1 .bx { font-size: 74px; font-weight: 600; color: var(--graphite); }
+  .cv-l1 .bx-en { position: relative; }
+  .cv-l1 .bx-en::after { content: ''; position: absolute; left: -6px; right: -6px; top: 54%; height: 7px; border-radius: 4px; background: var(--ink); transform: rotate(-4deg); }
+  .cv-l2 { position: absolute; left: 0; right: 0; top: 488px; display: flex; justify-content: center; }
+  .cv-l2 .bx { font-size: 150px; font-weight: 700; color: var(--ink); line-height: 1.15; }
+  .cv-l2 .bx-en { font-weight: 800; letter-spacing: -0.05em; }
+  .cv-l2 .bx-ar:last-child { color: var(--accent); }
+  .cv-stage { position: absolute; inset: 0; perspective: 2600px; perspective-origin: 540px 1100px; }
+  .cv-stage .br { left: 90px; top: 790px; transform: rotateX(9deg) rotateZ(-2.5deg) scale(0.92); transform-origin: 450px 0; }
+  .cv-ring { position: absolute; left: 262px; top: 800px; width: 600px; height: 46px; border-radius: 24px; box-shadow: 0 0 0 4px var(--accent), 0 0 40px 8px rgba(109,66,229,0.35); }
+  .cv-chip { opacity: 0.55; filter: blur(0.5px); }
+</style></head>
+<body><div id="stage"></div>
+<script type="module">
+import { h } from './utils/dom.js';
+import { mixed } from './utils/text.js';
+import { Site } from './components/Site.js';
+import { Browser } from './components/Browser.js';
+import { linkChip, LINKS } from './components/Chaos.js';
+import { CREATOR } from './config/creator.js';
+const stage = document.getElementById('stage');
+const site = Site(); site.nameA.textContent = CREATOR.first;
+site.el.querySelector('.st-caret').style.display = 'none'; site.grid.style.display = 'none';
+site.el.querySelector('.st-cta').style.background = 'var(--accent)';
+const br = Browser(site.el); br.setView(760);
+const chips = [[40, 1560, -8], [640, 1600, 6], [760, 700, 9], [10, 690, -7]].map(([x, y, r], i) => {
+  const c = linkChip(LINKS[i]); c.classList.add('cv-chip');
+  Object.assign(c.style, { left: x + 'px', top: y + 'px', transform: `rotate(${r}deg)` }); return c; });
+stage.append(
+  h('div', { class: 'cv-stage' }, br.el),
+  ...chips,
+  h('div', { class: 'cv-eyebrow' }, 'PREMIUM WEBSITE PORTFOLIO'),
+  h('div', { class: 'cv-l1' }, mixed('بدل ما تبعث [10 Links]…')),
+  h('div', { class: 'cv-l2' }, mixed('[Link] واحد.')),
+);
+await document.fonts.ready;
+await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
+window.__ready = true;
+</script></body></html>
